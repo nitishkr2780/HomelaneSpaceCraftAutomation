@@ -16,7 +16,10 @@ public class IndexPage {
     @FindBy(xpath = "//p[@class='HeaderComponent-module__design_button--qW3DU']")
     WebElement skipToScene;
 
-    public void clickSkipToScene() {
+    public DesignPage clickSkipToScene() {
         skipToScene.click();
+        return new DesignPage(driver);
     }
+
+
 }
