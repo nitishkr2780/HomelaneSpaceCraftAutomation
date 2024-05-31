@@ -6,31 +6,30 @@ import java.time.Duration;
 import java.util.Properties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
 
 public class BaseClass {
     public Properties properties;
     public WebDriver driver;
 
-    @BeforeMethod
+    @BeforeClass
     public void loadConfig() {
         try {
             FileReader file = new FileReader(".//Configuration/Config.properties");
             properties = new Properties();
             properties.load(file);
-
-            System.out.println("Configuration file  Loaded Successfully");
-
         } catch (IOException e) {
             System.out.println("Error loading configuration file: " + e.getMessage());
         }
     }
-
     public void launchApp() {
         switch (properties.getProperty("browser").toLowerCase()) {
             case "chrome":
-                driver = new ChromeDriver();
+                ChromeOptions options = new ChromeOptions();
+                options.addArguments("--user-data-dir=/home/nitish/.config/google-chrome/Default"); //for store  session
+                driver = new ChromeDriver(options);
                 break;
             case "edge":
                 driver = new EdgeDriver();
